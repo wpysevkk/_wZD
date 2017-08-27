@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+       
+        <meta charset="UTF-8">
+         <title>注册</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     
+        <style>
+            .container{
+	width:1000px;
+	margin: 0 auto;
+}
+.register{
+	width: 400px;
+	margin: 0 auto;
+	padding-top: 50px;
+}
+.register-box{
+	width:100%;
+	height:86px;
+	position: relative;
+}
+.box{
+	width: 100%;
+	height:52px;
+	border: 1px #ccc solid;
+	line-height: 52px;
+}
+#Button1{
+   width: 100%;
+	height:40px;
+        background-color: #FF0000;
+}
+.box label{
+	display: block;
+	float: left;
+	width:85px;
+	height:14px;
+	padding: 18px;
+	font:14px/14px "宋体";
+}
+.verify.error,.box.error,.agreeBox.error{
+	border: 1px #f00 solid;
+}
+.box input{
+	font-size:16px;
+}
+.box.right i{
+	width: 20px;
+	height: 20px;
+	background: url(picture/right.png) no-repeat center center;
+	position: absolute;
+	right: 60px;
+	top: 18px;
+        
+}
+.remind{
+	width: 100%;
+	height: 32px;
+	font-size: 12px;
+	line-height: 32px;
+}
+
+.remind i{
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.remind span{
+	color: #ccc;
+}
+
+/*提示信息隐藏*/
+.remind.hide{
+	display: none;
+}
+
+/*提示信息默认样式*/
+.remind.default i{
+	background: url(picture/default.png) no-repeat center center;
+}
+
+/*提示信息错误样式*/
+.remind.error i{
+	background: url(picture/error.png) no-repeat center center;
+}
+
+.remind.error span{
+	color: #f00;
+}
+/*提示系信息密码弱*/
+.remind.ruo i{
+	background: url(picture/ruo.png) no-repeat center center;
+}
+
+/*提示信息密码中*/
+.remind.zhong i{
+	background: url(picture/zhong.png) no-repeat center center;
+}
+
+/*提示信息密码强*/
+.remind.qiang i{
+	background: url(picture/qiang.png) no-repeat center center;
+}
+.verifyCode{
+	width: 100px;
+	height: 48px;
+	float: right;
+	background: #000;
+	color: #fff;
+	font: 18px/48px "微软雅黑";
+	text-align: center;
+	cursor: pointer;
+	margin-top: 2px;
+	margin-right: 2px;
+}
+.verify input{
+	width: 100px;
+}
+
+.agreeBox{
+
+	font-size: 14px;
+}
+button{
+	width: 400px;
+	height: 52px;
+	background-color: darkred;
+	font:18px/52px "微软雅黑";
+	color: #FFFFFF;
+}
+
+button:hover{
+	background-color: red;
+}/*
+            </style>
+            <script>
+               
+function myFocus() {
+            document.getElementById("userName").focus();
+        }
+/*----------------------------用户名----------------------------*/
+function blurUserName(name) {
+   
+var 	userNameReg=/^([\u4e00-\u9fa5]|\w|-)+$/; //用户名正则表达式
+var user=document.getElementById("userName");
+var user_parent=user.parentNode;
+var user_next=user_parent.nextElementSibling;
+	var span_last = user_next.lastElementChild;
+          if (name == null || name == "") {
+
+                user_parent.className="box error";
+                user_next.className = "remind error";
+                span_last.innerHTML = "请输入用户名";
+                return false;
+            }
+            else {
+             
+		if(userNameReg.test(name)){
+                          if(name.length>=4 && name.length<=20){
+                               user_parent.className = "box right";
+				user_next.className = "remind hide";
+				 span_last.innerHTML = "用户名可用";
+                     return true;
+			}else{
+				user_parent.className="box error";
+                                user_next.className = "remind error";
+				span_last.innerHTML = "长度4-20个字符";
+				return false;
+			}
+		}else{
+			user_parent.className="box error";
+                         user_next.className = "remind error";
+			span_last.innerHTML = "格式错误，仅支持汉字、字母、数字、-、_的组合，4-20个字符";
+			return false;
+		}
+        }
+    }
+  
+    /*----------------------------密码----------------------------*/
+function blurPwdName(name) {
+   
+var 	regNum =/\d+/;          
+	var regWord = /[a-zA-Z]+/;     
+	var regOther = /[^\da-zA-Z]+/;
+var user=document.getElementById("userPwd");
+var user_parent=user.parentNode;
+var user_next=user_parent.nextElementSibling;
+var span_last = user_next.lastElementChild;
+
+          if (name == null || name == "") {
+
+                user_parent.className="box error";
+                user_next.className = "remind error";
+                span_last.innerHTML = "请输入密码";
+                return false;
+            }
+            else {
+                if(name.length>=6 && name.length<=20){
+			user_parent.className = "box right";
+			var level = 0;
+			if(regNum.test(name)){
+				level++;
+			}
+			if(regWord.test(name)){
+				level++;
+			}
+			if(regOther.test(name)){
+				level++;
+			}
+			switch(level){
+				case 1:
+					user_next.className = "remind ruo";
+					span_last.innerHTML = "密码强度弱";
+					break;
+				case 2:
+					user_next.className = "remind zhong";
+					span_last.innerHTML = "密码强度中";
+					break;
+				case 3:
+					user_next.className = "remind qiang";
+					span_last.innerHTML  = "密码强度强";
+					break;
+				default:
+					user_next.className = "remind ruo";
+					span_last.innerHTML  = "密码强度弱";
+			}
+			return true;
+		}else{
+			user_parent.className = "box error";
+			user_next.className = "remind error";
+			span_last.innerHTML = "密码长度不符合";
+			return false;
+		}
+             
+		
+        }
+    }
+         /*----------------------------检验密码----------------------------*/       
+     function pwdValidate(name) {
+   
+
+var user=document.getElementById("confirmPwd");
+var user_parent=user.parentNode;
+var user_next=user_parent.nextElementSibling;
+	var span_last = user_next.lastElementChild;
+          if (name == null || name == "") {
+
+                user_parent.className="box error";
+                user_next.className = "remind error";
+                span_last.innerHTML = "请再次输入密码";
+                return false;
+            }
+            else {
+             if(name.length>=6 && name.length<=20){
+			if(name == document.getElementById("userPwd").value){
+				 user_parent.className = "box right";
+				user_next.className = "remind hide";
+				return true;
+			}else{
+				 user_parent.className = "box error";
+				user_next.className = "remind error";
+				span_last.innerHTML = "您输入的密码有误";
+				return false;
+			}
+		}else{
+			 user_parent.className = "box error";
+			user_next.className = "remind error";
+			span_last.innerHTML = "您输入的密码位数有误";
+			return false;
+		}
+	}
+		
+        }
+   /*---------------------------邮箱----------------------------*/
+   function Email(name) {
+   
+var emailReg=/^\w+@\w+(\.com)+$/;
+var user=document.getElementById("email");
+var user_parent=user.parentNode;
+var user_next=user_parent.nextElementSibling;
+	var span_last = user_next.lastElementChild;
+          if (name == null || name == "") {
+
+                user_parent.className="box error";
+                user_next.className = "remind error";
+                span_last.innerHTML = "请输入常用邮箱";
+                return false;
+            }
+            else {
+                if(emailReg.test(name)){
+			if(name.length>=6 && name.length<=20){
+				 user_parent.className = "box right";
+				user_next.className = "remind hide";
+				return true;
+			}else{
+				 user_parent.className = "box error";
+				user_next.className = "remind error";
+				span_last.innerHTML = "长度6-20个字符";
+				return false;
+			}
+		}else{
+			 user_parent.className = "box error";
+				user_next.className = "remind error";
+			span_last.innerHTML = "您输入的邮箱有误";
+			return false;
+		}
+            
+	}
+		
+        }
+    /*---------------------------手机号----------------------------*/      
+            function Mobile(name) {
+   
+var mobilReg=/^[1]\d*$/;
+var user=document.getElementById("mobile");
+var user_parent=user.parentNode;
+var user_next=user_parent.nextElementSibling;
+	var span_last = user_next.lastElementChild;
+          if (name == null || name == "") {
+
+                user_parent.className="box error";
+                user_next.className = "remind error";
+                span_last.innerHTML = "请输入常用手机号";
+                return false;
+            }
+            else {
+                if(mobilReg.test(name)){
+			if(name.length==11){
+				 user_parent.className = "box right";
+				user_next.className = "remind hide";
+				return true;
+			}else{
+				 user_parent.className = "box error";
+				user_next.className = "remind error";
+				span_last.innerHTML = "请检查输入的手机号";
+				return false;
+			}
+		}else{
+			 user_parent.className = "box error";
+			user_next.className = "remind error";
+			span_last.innerHTML = "非正常手机号，请重新输入";
+			return false;
+		}
+                
+             
+            
+	}
+		
+        }
+      /*----------------------------验证码----------------------------*/       
+   
+
+
+        /*----------------------------点击注册按钮----------------------------*/
+          //设置cookie
+        function setCookie(str, strValue) {
+            var exp = new Date();
+            exp.setTime(exp.getTime() + 1 * 24 * 60 * 60 * 1000);
+            document.cookie = str + "=" + strValue + ";expires=" + exp.toGMTString();
+            location.href = "login.html"; //接收页面
+        }
+        //验证用户名和密码
+        function validateRegister() {
+             var User = document.getElementById("userName").value;
+            var pass = document.getElementById("userPwd").value;
+            var confirm = document.getElementById("confirmPwd").value;
+             var emaiL = document.getElementById("email").value;
+              var mobilE = document.getElementById("mobile").value;
+              
+            var user=document.getElementById("agreement");
+            var user_parent = user.parentNode;
+	var user_next = user_parent.nextElementSibling;
+	var span_last = user_next.lastElementChild;
+	if(user.checked){
+		user_parent.className = "agreeBox";
+		user_next.className = "remind hide";
+		if (blurUserName(User) && blurPwdName(pass) && pwdValidate(confirm)&&Email(emaiL)&&Mobile(mobilE)) {
+                setCookie("email", emaiL);
+                setCookie("password", pass);
+            }
+	}else{
+		user_parent.className = "agreeBox error";
+		user_next.className = "remind error";
+		span_last.innerHTML = "请同意协议";
+		return false;
+	}
+           
+              
+            
+        }
+
+            </script>
+    </head>
+    <body onload="myFocus();">
+        <div class="container" >
+                <img class="img-responsive center-block" src="picture/wangyiyouxiang.jpg" style="width:236.5px;height:60px;margin-top:50px;" >           
+                <span style="margin-left:500px;"> 已有账号？去<a href="login.html" style="color:#FF0000">登录</a></span>
+            </div>
+       
+        <div class="container">
+            <div class="register">
+                 <!--用户名-->
+                <div class="register-box">
+                    
+                    <div class="box" >
+						<label for="userName">用&nbsp;户&nbsp;名</label>
+						<input type="text" name="userName" id="userName" placeholder="您的账户名和登录名" onblur="blurUserName(this.value);"/>
+                                                
+						<i></i>
+					</div>
+                    <!--提示信息-->
+					<div class="remind">
+						<i></i>
+						<span >支持汉字、字母、数字、-、_的组合，4-20个字符</span>
+					</div>
+                    
+                    
+                </div>
+                  <!--密码-->
+                <div class="register-box">
+					<!--表单项-->
+					<div class="box">
+						<label for="userPwd">设 置 密 码</label>
+						<input type="password" name="userPwd" id="userPwd" placeholder="建议至少使用两种字符组合"onblur="blurPwdName(this.value);" />
+						<i></i>
+					</div>
+					<!--提示信息-->
+					<div class="remind">
+						<i></i>
+						<span>建议使用数字、字母和符号两种以上的组合，6-20个字符</span>
+					</div>
+				</div>
+                
+                <!--确认密码-->
+				<div class="register-box">
+					<!--表单项-->
+					<div class="box">
+						<label for="confirmPwd">确 认 密 码</label>
+						<input type="password" name="confirmPwd" id="confirmPwd" placeholder="请再次输入密码" onblur="pwdValidate(this.value);"/>
+						<i></i>
+					</div>
+					<!--提示信息-->
+					<div class="remind">
+						<i></i>
+						<span>请确保密码一致</span>
+					</div>
+				</div>
+                <!--邮箱-->
+				<div class="register-box">
+					<!--表单项-->
+					<div class="box">
+						<label for="email">邮 箱 验 证</label>
+						<input type="email" name="email" id="email" placeholder="建议使用常用邮箱" onblur="Email(this.value);"/>
+						<i></i>
+					</div>
+					<!--提示信息-->
+					<div class="remind">
+						<i></i>
+						<span>请输入常用邮箱</span>
+					</div>
+				</div>
+                <!--手机号-->
+				<div class="register-box">
+					<!--表单项-->
+					<div class="box">
+						<label for="mobile">手&nbsp;机&nbsp;号</label>
+						<input type="text" name="mobile" id="mobile" placeholder="建议使用常用手机" onblur="Mobile(this.value);"/>
+						<i></i>
+					</div>
+					<!--提示信息-->
+					<div class="remind">
+						<i></i>
+						<span>请输入常用手机号</span>
+					</div>
+				</div>
+                <!--验证码-->
+				
+                <!--协议-->
+				<div class="agreement">
+					<!--表单项-->
+					<div class="agreeBox">
+						<input type="checkbox" name="agreement" id="agreement"/>
+						<span>用户勾选即代表同意<a href="#">《服务条款》和《网络游戏用户隐私保护和个人信息利用政策》</a></span>
+					</div>
+					<!--提示信息-->
+					<div class="remind">
+						<i></i>
+						<span></span>
+					</div>
+				</div>
+				<!--注册-->
+				<input id="Button1" type="button" value="注册"checked="checked" onclick="validateRegister()" />
+                              
+			</div>			
+        </div>
+    </body>
+</html>
